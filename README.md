@@ -1,3 +1,5 @@
+*This fork adds auto-completion for special characters as per https://github.com/estelle/input-masking/issues/27*
+
 Input Masking
 =====================
 
