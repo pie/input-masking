@@ -111,10 +111,13 @@ var inputMask = {
   },
 
   handleCurrentValue : function (e) {
-    var isCharsetPresent = e.target.getAttribute('data-charset'),
-        placeholder = isCharsetPresent || e.target.getAttribute('data-placeholder'),
+
+    var isCharsetPresent = e.target.getAttribute('data-charset'), 
+        placeholder = isCharsetPresent || e.target.getAttribute('data-placeholder'), 
         value = e.target.value, l = placeholder.length, newValue = '',
-        i, j, isInt, isLetter, strippedValue;
+        i, j, isInt, isLetter, strippedValue, 
+        regNot = new RegExp("[^"+this.opts.mNum+this.opts.mChar+"]");
+
 
     // strip special characters
     strippedValue = isCharsetPresent ? value.replace(/\W/g, "") : value.replace(/\D/g, "");
@@ -137,6 +140,17 @@ var inputMask = {
           break;
         }
     }
+    
+    if (newValue.length >= value.length) { 
+      for (i = newValue.length; i < l; i++) { 
+        if (placeholder[i].match(regNot)) { 
+          newValue += placeholder[i]; 
+        } else {
+          break; 
+        } 
+      } 
+    }
+    
     if (e.target.getAttribute('data-valid-example')) {
       return this.validateProgress(e, newValue);
     }
